@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CWx StockTake — Training Manual | Pattana Intercool</title>
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   DESIGN SYSTEM
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --blue-900:#0f172a; --blue-800:#1e3a5f; --blue-700:#1d4ed8;
+  --blue-600:#2563eb; --blue-400:#60a5fa; --blue-100:#dbeafe; --blue-50:#eff6ff;
+  --green-800:#14532d; --green-600:#16a34a; --green-100:#dcfce7; --green-50:#f0fdf4;
+  --amber-700:#b45309; --amber-500:#f59e0b; --amber-100:#fef3c7; --amber-50:#fffbeb;
+  --red-700:#b91c1c; --red-100:#fee2e2; --red-50:#fff1f2;
+  --purple-700:#7e22ce; --purple-100:#f3e8ff; --purple-50:#faf5ff;
+  --teal-700:#0f766e; --teal-100:#ccfbf1; --teal-50:#f0fdfa;
+  --gray-900:#111827; --gray-700:#374151; --gray-600:#4b5563;
+  --gray-500:#6b7280; --gray-300:#d1d5db; --gray-200:#e5e7eb;
+  --gray-100:#f3f4f6; --gray-50:#f9fafb;
+  --white:#ffffff;
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family: 'Segoe UI', 'Sarabun', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+/* ─── COVER ──────────────────────────────────────────────────── */
+.cover {
+  background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 32px;
+  page-break-after: always;
+}
+
+.cover-logo {
+  width: 80px; height: 80px;
+  background: rgba(255,255,255,.15);
+  border: 2px solid rgba(255,255,255,.3);
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  margin-bottom: 28px;
+}
+
+.cover h1 { font-size: 2.6em; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
+.cover h2 { font-size: 1.3em; font-weight: 400; opacity: .8; margin-bottom: 32px; }
+
+.cover-pills { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 40px; }
+.pill {
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 20px;
+  padding: 6px 18px;
+  font-size: .85em;
+  font-weight: 600;
+}
+
+.cover-dates {
+  display: flex; gap: 24px; flex-wrap: wrap; justify-content: center;
+}
+
+.date-card {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 14px;
+  padding: 20px 32px;
+}
+
+.date-card .day { font-size: .75em; opacity: .7; text-transform: uppercase; letter-spacing: 1px; }
+.date-card .date { font-size: 1.5em; font-weight: 700; }
+.date-card .desc { font-size: .8em; opacity: .8; margin-top: 4px; }
+
+/* ─── SECTION NAV ─────────────────────────────────────────────── */
+.toc {
+  background: white;
+  border-bottom: 1px solid var(--gray-200);
+  padding: 16px 32px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 1px 8px rgba(0,0,0,.06);
+}
+
+.toc a {
+  text-decoration: none;
+  color: var(--gray-600);
+  font-size: .8em;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-300);
+  transition: all .15s;
+  white-space: nowrap;
+}
+
+.toc a:hover { background: var(--blue-600); color: white; border-color: var(--blue-600); }
+
+/* ─── SECTIONS ────────────────────────────────────────────────── */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.section-icon {
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+  flex-shrink: 0;
+}
+
+.section-header h2 {
+  font-size: 1.7em;
+  font-weight: 800;
+  color: var(--gray-900);
+  line-height: 1.2;
+}
+
+.section-header p {
+  color: var(--gray-500);
+  margin-top: 4px;
+  font-size: .9em;
+}
+
+.audience-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: .75em;
+  font-weight: 700;
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ─── COLOR THEMES ─────────────────────────────────────────────── */
+.theme-counter .section-icon  { background: var(--blue-100); }
+.theme-counter .section-header h2 { color: var(--blue-800); }
+.theme-counter .audience-badge { background: var(--blue-100); color: var(--blue-700); }
+
+.theme-ic .section-icon  { background: var(--green-100); }
+.theme-ic .section-header h2 { color: var(--green-800); }
+.theme-ic .audience-badge { background: var(--green-100); color: var(--green-600); }
+
+.theme-recon .section-icon  { background: var(--purple-100); }
+.theme-recon .section-header h2 { color: var(--purple-700); }
+.theme-recon .audience-badge { background: var(--purple-100); color: var(--purple-700); }
+
+.theme-final .section-icon  { background: var(--teal-100); }
+.theme-final .section-header h2 { color: var(--teal-700); }
+.theme-final .audience-badge { background: var(--teal-100); color: var(--teal-700); }
+
+/* ─── TIMELINE ────────────────────────────────────────────────── */
+.timeline { position: relative; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: var(--gray-200);
+}
+
+.timeline-item {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 28px;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 58px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  z-index: 1;
+}
+
+.dot-circle {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px var(--gray-200);
+}
+
+.dot-label {
+  font-size: .65em;
+  font-weight: 700;
+  text-align: center;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+.timeline-content { flex: 1; }
+
+/* ─── CARDS ───────────────────────────────────────────────────── */
+.card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,.06);
+}
+
+.card-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-header h3 {
+  font-size: .95em;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.card-header .sub {
+  font-size: .78em;
+  color: var(--gray-500);
+  margin-left: auto;
+}
+
+.card-body { padding: 16px 18px; }
+
+/* ─── STEP LIST ───────────────────────────────────────────────── */
+.step-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.step-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: .88em;
+}
+
+.step-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  font-size: .7em;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-list li .text { flex: 1; line-height: 1.5; }
+.step-list li strong { display: block; font-weight: 700; color: var(--gray-900); }
+.step-list li span { color: var(--gray-600); font-size: .9em; }
+
+/* ─── GRIDS ────────────────────────────────────────────────────── */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+/* ─── ALERT BOXES ──────────────────────────────────────────────── */
+.alert {
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: .87em;
+}
+
+.alert-icon { font-size: 1.2em; flex-shrink: 0; }
+.alert strong { display: block; font-weight: 700; margin-bottom: 2px; }
+.alert-warn { background: var(--amber-50); border: 1px solid var(--amber-500); color: var(--amber-700); }
+.alert-info  { background: var(--blue-50);  border: 1px solid var(--blue-400);  color: var(--blue-800); }
+.alert-danger { background: var(--red-50);  border: 1px solid var(--red-700);   color: var(--red-700); }
+.alert-success { background: var(--green-50); border: 1px solid var(--green-600); color: var(--green-800); }
+
+/* ─── METHOD CARDS ─────────────────────────────────────────────── */
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 12px; }
+
+.method-card {
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid var(--gray-200);
+}
+
+.method-icon { font-size: 2em; margin-bottom: 8px; }
+.method-name { font-weight: 700; font-size: .95em; margin-bottom: 4px; }
+.method-desc { font-size: .8em; color: var(--gray-600); line-height: 1.5; }
+.method-tag {
+  display: inline-block;
+  font-size: .68em;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 8px;
+}
+
+/* ─── SERVER CARDS ─────────────────────────────────────────────── */
+.server-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+
+.server-card {
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px solid;
+}
+
+.server-card.pc1 { background: var(--blue-50);  border-color: var(--blue-400); }
+.server-card.pc2 { background: var(--green-50); border-color: var(--green-600); }
+
+.server-card h4 { font-size: 1em; font-weight: 800; margin-bottom: 6px; }
+.server-card .url { font-family: monospace; font-size: .85em; padding: 6px 10px;
+  background: rgba(0,0,0,.06); border-radius: 6px; display: block; margin: 8px 0; }
+.server-card ul { font-size: .82em; padding-left: 16px; color: var(--gray-700); line-height: 1.8; }
+
+/* ─── KEYBOARD SHORTCUTS ────────────────────────────────────────── */
+kbd {
+  background: var(--gray-100);
+  border: 1px solid var(--gray-300);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  padding: 2px 7px;
+  font-family: monospace;
+  font-size: .82em;
+  color: var(--gray-700);
+}
+
+/* ─── FLOW DIAGRAM ─────────────────────────────────────────────── */
+.flow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.flow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  min-width: 100px;
+  font-size: .78em;
+}
+
+.flow-step .ico { font-size: 1.5em; }
+.flow-step .lbl { font-weight: 700; }
+.flow-step .sub { color: var(--gray-500); font-size: .9em; }
+
+.flow-arrow {
+  color: var(--gray-300);
+  font-size: 1.4em;
+  padding: 0 4px;
+  flex-shrink: 0;
+}
+
+/* ─── TABLE ────────────────────────────────────────────────────── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .82em;
+}
+
+.data-table th {
+  background: var(--gray-900);
+  color: white;
+  padding: 9px 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.data-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--gray-200);
+  vertical-align: top;
+}
+
+.data-table tr:nth-child(even) td { background: var(--gray-50); }
+.data-table tr:last-child td { border-bottom: none; }
+
+/* ─── CHECKLIST ────────────────────────────────────────────────── */
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: .87em;
+  line-height: 1.5;
+}
+
+.check-box {
+  width: 20px; height: 20px;
+  border: 2px solid var(--gray-300);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ─── BLIND COUNT VISUAL ────────────────────────────────────────── */
+.blind-count {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.bc-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: .85em;
+}
+
+.bc-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800;
+  font-size: .9em;
+  flex-shrink: 0;
+}
+
+/* ─── DIVIDERS ─────────────────────────────────────────────────── */
+.section-divider {
+  background: var(--gray-200);
+  height: 6px;
+}
+
+/* ─── UI MOCKUP ─────────────────────────────────────────────────── */
+.phone-frame {
+  width: 280px;
+  border: 8px solid var(--gray-900);
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  flex-shrink: 0;
+}
+
+.phone-screen { background: var(--blue-800); }
+.phone-status { background: var(--gray-900); color: white; font-size: .65em;
+  padding: 8px 16px; display: flex; justify-content: space-between; }
+.phone-content { background: var(--gray-50); }
+.phone-nav { background: white; border-top: 1px solid var(--gray-200);
+  display: flex; justify-content: space-around; padding: 8px 0; }
+.phone-nav-item { display: flex; flex-direction: column; align-items: center;
+  font-size: .6em; gap: 2px; color: var(--gray-500); }
+.phone-nav-item.active { color: var(--blue-600); }
+
+/* ─── PRINT ────────────────────────────────────────────────────── */
+@media print {
+  .toc { display: none; }
+  .cover { page-break-after: always; min-height: auto; padding: 60px 40px; }
+  .section { padding: 32px 20px; }
+  .timeline-item { break-inside: avoid; }
+  .card { break-inside: avoid; }
+  body { background: white; }
+}
+
+/* ─── UTILS ────────────────────────────────────────────────────── */
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.mb-4 { margin-bottom: 16px; }
+.text-sm { font-size: .82em; }
+.text-xs { font-size: .72em; }
+.text-muted { color: var(--gray-500); }
+.font-mono { font-family: monospace; }
+.center { text-align: center; }
+
+.tag {
+  display: inline-block;
+  font-size: .68em;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.tag-blue   { background: var(--blue-100);   color: var(--blue-700); }
+.tag-green  { background: var(--green-100);  color: var(--green-800); }
+.tag-amber  { background: var(--amber-100);  color: var(--amber-700); }
+.tag-red    { background: var(--red-100);    color: var(--red-700); }
+.tag-purple { background: var(--purple-100); color: var(--purple-700); }
+.tag-teal   { background: var(--teal-100);   color: var(--teal-700); }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     COVER
+═══════════════════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-logo">❄️</div>
+  <h1>CWx StockTake</h1>
+  <h2>Training Manual — Physical Stock Count 2026</h2>
+  <h2 style="font-size:.95em;opacity:.65;">คู่มือการฝึกอบรม — การนับสต๊อกสินค้า</h2>
+  <div class="cover-pills" style="margin-top:20px;">
+    <span class="pill">📦 ทีมนับสินค้า</span>
+    <span class="pill">🖥️ ทีม Inventory Control</span>
+    <span class="pill">📊 การกระทบยอด</span>
+    <span class="pill">✅ สรุปผล</span>
+  </div>
+  <div class="cover-dates">
+    <div class="date-card">
+      <div class="day">วันที่ 1</div>
+      <div class="date">3 กรกฎาคม 2569</div>
+      <div class="desc">คลัง WH / RM / FG</div>
+    </div>
+    <div class="date-card">
+      <div class="day">วันที่ 2</div>
+      <div class="date">6 กรกฎาคม 2569</div>
+      <div class="desc">โรงงาน PD / Factory</div>
+    </div>
+  </div>
+  <p style="margin-top:40px;opacity:.5;font-size:.8em;">บริษัท พัฒนา อินเตอร์คูล จำกัด · เวอร์ชัน 1.0 · มิถุนายน 2569</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════════ -->
+<nav class="toc">
+  <a href="#s1">📋 ทีมนับ</a>
+  <a href="#s2">🖥️ IC Team — เตรียมก่อนนับ</a>
+  <a href="#s3">⚙️ IC Team — จัดการระหว่างนับ</a>
+  <a href="#s4">🔧 แก้ไขข้อผิดพลาด</a>
+  <a href="#s5">📊 หลังนับเสร็จ</a>
+  <a href="#s6">🔁 กระทบยอด</a>
+  <a href="#s7">✅ สรุปผลสต๊อก</a>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 1 — COUNT TEAM
+═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="section-header theme-counter">
+    <div class="section-icon">📋</div>
+    <div>
+      <div class="audience-badge">👥 สำหรับ: ทีมนับสินค้า (Counters)</div>
+      <h2>ทีมนับสินค้า — ขั้นตอนตั้งแต่ต้นจนจบ</h2>
+      <p>ทุกสิ่งที่ทีมนับต้องทำ ตั้งแต่วันเตรียมการ จนถึงส่งข้อมูลครบ</p>
+    </div>
+  </div>
+
+  <!-- Server Info -->
+  <div class="server-grid">
+    <div class="server-card pc1">
+      <h4>🖥️ PC1 — เซิร์ฟเวอร์หลัก</h4>
+      <code class="url">https://192.168.1.71:3443</code>
+      <ul>
+        <li>ทีม WH / RM / Factory</li>
+        <li>ทีม Sales / Service</li>
+        <li>เซิร์ฟเวอร์ฐานข้อมูลหลัก</li>
+      </ul>
+    </div>
+    <div class="server-card pc2">
+      <h4>🖥️ PC2 — เซิร์ฟเวอร์ FG</h4>
+      <code class="url">https://192.168.1.88:3443</code>
+      <ul>
+        <li>ทีม FG (Finished Goods)</li>
+        <li>ทีม PD1–PD5, PD9</li>
+        <li>หาก PC2 ล่ม → ใช้ PC1 แทนได้</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <div class="alert-icon">ℹ️</div>
+    <div><strong>หัวหน้าทีมจะแจ้ง</strong> ว่าทีมของคุณต้องต่อ PC1 หรือ PC2 ให้ดูที่หน้า <code>http://192.168.1.71:3000/setup/routing.html</code></div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="timeline">
+
+    <!-- Day -1 -->
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--amber-100);">📅</div>
+        <div class="dot-label">D-1<br>วันก่อน</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header" style="background:var(--amber-50);">
+            <span>🌅</span>
+            <h3>วันก่อนนับ — เตรียมตัว</h3>
+            <span class="sub">2 ก.ค. / 5 ก.ค.</span>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div>
+                <p style="font-size:.8em;font-weight:700;color:var(--gray-600);margin-bottom:8px;">📱 ติดตั้ง CA Certificate (ทำครั้งเดียว)</p>
+                <ul class="step-list">
+                  <li>
+                    <div class="step-num" style="background:var(--amber-100);color:var(--amber-700);">1</div>
+                    <div class="text">
+                      <strong>เปิด Safari (iPhone) / Chrome (Android)</strong>
+                      <span>ไปที่ <code style="font-size:.85em;">http://192.168.1.71:3000/setup/</code></span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="step-num" style="background:var(--amber-100);color:var(--amber-700);">2</div>
+                    <div class="text">
+                      <strong>iPhone: กด "Download CA Certificate"</strong>
+                      <span>ไปที่ Settings → General → About → Certificate Trust Settings → เปิด</span>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="step-num" style="background:var(--amber-100);color:var(--amber-700);">3</div>
+                    <div class="text">
+                      <strong>Android: ดาวน์โหลด ca.crt</strong>
+                      <span>Settings → Security → Install CA Certificate</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p style="font-size:.8em;font-weight:700;color:var(--gray-600);margin-bottom:8px;">✅ ตรวจสอบก่อนวันนับ</p>
+                <ul class="checklist">
+                  <li><div class="check-box"></div><span>ทดสอบ login เข้า app สำเร็จ</span></li>
+                  <li><div class="check-box"></div><span>เห็น session ของทีมตัวเอง</span></li>
+                  <li><div class="check-box"></div><span>รู้ว่าต่อ PC1 หรือ PC2</span></li>
+                  <li><div class="check-box"></div><span>กล้อง / สแกนเนอร์ทำงานได้</span></li>
+                  <li><div class="check-box"></div><span>ชาร์จแบตเตอรี่เต็ม</span></li>
+                  <li><div class="check-box"></div><span>รู้จุดที่ตัวเองต้องนับ</span></li>
+                  <li><div class="check-box"></div><span>รับใบนับสต๊อก (Count Sheet) จากหัวหน้า</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Count Day Morning -->
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--blue-100);">🌅</div>
+        <div class="dot-label">เช้า<br>วันนับ</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header" style="background:var(--blue-50);">
+            <span>☀️</span>
+            <h3>เช้าวันนับ — เตรียมพร้อมก่อนเริ่ม</h3>
+          </div>
+          <div class="card-body">
+            <ul class="step-list">
+              <li>
+                <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">1</div>
+                <div class="text">
+                  <strong>เชื่อม WiFi "WIFI_PIC" และเปิด app</strong>
+                  <span>ต่อ PC1 (<code>192.168.1.71:3443</code>) หรือ PC2 (<code>192.168.1.88:3443</code>) ตามที่หัวหน้าแจ้ง</span>
+                </div>
+              </li>
+              <li>
+                <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">2</div>
+                <div class="text">
+                  <strong>กด "รอบนับ" → เลือก Session ของทีมคุณ</strong>
+                  <span>ตรวจสอบว่า Status เป็น "Active" (สีเขียว)</span>
+                </div>
+              </li>
+              <li>
+                <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">3</div>
+                <div class="text">
+                  <strong>กด "เริ่มนับ" ตามวิธีที่กำหนด</strong>
+                  <span>Barcode Scan / Smart Count / GoPro Count ตามที่ระบุในใบนับ</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Count Methods -->
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--blue-600);">📲</div>
+        <div class="dot-label">ระหว่าง<br>นับ</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header" style="background:var(--blue-800);">
+            <span style="color:white;">🔍</span>
+            <h3 style="color:white;">วิธีนับ — เลือกตามที่กำหนดในใบนับ</h3>
+          </div>
+          <div class="card-body">
+            <div class="method-grid">
+              <div class="method-card" style="background:var(--blue-50);border-color:var(--blue-400);">
+                <div class="method-icon">📷</div>
+                <div class="method-name">Barcode Scan</div>
+                <div class="method-desc">สแกนบาร์โค้ดสินค้าและโลเคชั่น ป้อนจำนวน บันทึก</div>
+                <span class="method-tag" style="background:var(--blue-100);color:var(--blue-700);">WH ทั่วไป</span>
+              </div>
+              <div class="method-card" style="background:var(--green-50);border-color:var(--green-600);">
+                <div class="method-icon">🤖</div>
+                <div class="method-name">Smart Count (AI)</div>
+                <div class="method-desc">ถ่ายภาพชั้นวาง ระบบ AI นับสินค้าให้ ยืนยันจำนวน</div>
+                <span class="method-tag" style="background:var(--green-100);color:var(--green-800);">WHAA–FF ชั้น 3–4</span>
+              </div>
+              <div class="method-card" style="background:var(--amber-50);border-color:var(--amber-500);">
+                <div class="method-icon">📸</div>
+                <div class="method-name">GoPro Count</div>
+                <div class="method-desc">ถ่ายภาพพาเลท ระบุสินค้า สแกนบาร์โค้ด ป้อนจำนวน</div>
+                <span class="method-tag" style="background:var(--amber-100);color:var(--amber-700);">ชั้นสูง / พาเลท</span>
+              </div>
+              <div class="method-card" style="background:var(--purple-50);border-color:var(--purple-700);">
+                <div class="method-icon">📝</div>
+                <div class="method-name">Floor Count</div>
+                <div class="method-desc">เดินสำรวจ เลือกโลเคชั่น นับแต่ละ SKU ป้อนจำนวน</div>
+                <span class="method-tag" style="background:var(--purple-100);color:var(--purple-700);">โรงงาน / PD</span>
+              </div>
+            </div>
+
+            <!-- Blind Count Rule -->
+            <div class="mt-6">
+              <p style="font-weight:700;font-size:.9em;margin-bottom:12px;">🔒 กฎการนับแบบ Blind Count (บังคับทุกวิธี ยกเว้น GoPro)</p>
+              <div class="blind-count">
+                <div class="bc-row" style="background:var(--blue-50);border:1px solid var(--blue-400);">
+                  <div class="bc-num" style="background:var(--blue-600);color:white;">1</div>
+                  <div style="flex:1;">
+                    <strong style="font-size:.88em;">รอบแรก</strong>
+                    <span style="font-size:.82em;color:var(--gray-600);display:block;">นับจำนวนจริง → แอปเปรียบเทียบกับ SAP (คุณ<em>ไม่เห็น</em>ตัวเลข SAP)</span>
+                  </div>
+                  <div style="text-align:right;font-size:.75em;color:var(--blue-600);font-weight:700;">ต่างมาก → นับซ้ำ</div>
+                </div>
+                <div class="bc-row" style="background:var(--amber-50);border:1px solid var(--amber-500);">
+                  <div class="bc-num" style="background:var(--amber-500);color:white;">2</div>
+                  <div style="flex:1;">
+                    <strong style="font-size:.88em;">รอบสอง</strong>
+                    <span style="font-size:.82em;color:var(--gray-600);display:block;">แอปเปรียบเทียบรอบ 2 กับรอบ 1 (ยังไม่เห็นตัวเลขเก่า)</span>
+                  </div>
+                  <div style="text-align:right;font-size:.75em;color:var(--amber-700);font-weight:700;">ต่างอีก → นับรอบสาม</div>
+                </div>
+                <div class="bc-row" style="background:var(--green-50);border:1px solid var(--green-600);">
+                  <div class="bc-num" style="background:var(--green-600);color:white;">3</div>
+                  <div style="flex:1;">
+                    <strong style="font-size:.88em;">รอบสาม — สุดท้าย</strong>
+                    <span style="font-size:.82em;color:var(--gray-600);display:block;">ตัวเลขที่ป้อนรอบสามถือเป็นค่าสุดท้าย บันทึกได้เลย</span>
+                  </div>
+                  <div style="text-align:right;font-size:.75em;color:var(--green-700);font-weight:700;">✅ บันทึก</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row number hint -->
+            <div class="alert alert-info mt-4">
+              <div class="alert-icon">💡</div>
+              <div><strong>ประสานงานกับทีมบัญชี</strong> — หน้าจอ Barcode Scan แสดง <strong>#เลขแถว</strong> (เช่น #7) สอดคล้องกับใบนับที่พิมพ์ออกมา เมื่อสแกนสินค้าแล้วบอกเลขแถวให้ทีมบัญชีจด</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Finishing Up -->
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--green-100);">✅</div>
+        <div class="dot-label">ส่งงาน<br>สุดท้าย</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header" style="background:var(--green-50);">
+            <span>🏁</span>
+            <h3>ส่งงานและปิดการนับ</h3>
+          </div>
+          <div class="card-body">
+            <div class="grid-2">
+              <ul class="step-list">
+                <li>
+                  <div class="step-num" style="background:var(--green-100);color:var(--green-800);">1</div>
+                  <div class="text">
+                    <strong>ตรวจสอบสินค้าทุกรายการ</strong>
+                    <span>แถบสถานะ ✅ "นับแล้ว" ทุก SKU ในโลเคชั่น</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--green-100);color:var(--green-800);">2</div>
+                  <div class="text">
+                    <strong>สินค้าที่หาไม่เจอ → กด "Missing (0)"</strong>
+                    <span>อย่าปล่อยให้มีรายการ Pending ค้างอยู่</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--green-100);color:var(--green-800);">3</div>
+                  <div class="text">
+                    <strong>แจ้งหัวหน้าหรือ IC Team ว่านับเสร็จแล้ว</strong>
+                    <span>IC Team จะ Complete session ให้</span>
+                  </div>
+                </li>
+              </ul>
+              <div class="alert alert-warn" style="margin:0;">
+                <div class="alert-icon">⚠️</div>
+                <div>
+                  <strong>ห้ามแก้ไขตัวเลขโดยไม่ได้รับอนุญาต</strong>
+                  หากต้องการแก้ไข ให้แจ้ง IC Team เท่านั้น ระบบบันทึก audit log ทุกการเปลี่ยนแปลง
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /timeline -->
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 2 — IC TEAM PREPARATION
+═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="section-header theme-ic">
+    <div class="section-icon">🖥️</div>
+    <div>
+      <div class="audience-badge">🛡️ สำหรับ: Inventory Control Team</div>
+      <h2>IC Team — เตรียมระบบก่อนวันนับ</h2>
+      <p>ขั้นตอน 1 สัปดาห์ถึง 1 วันก่อนนับ และเช้าวันนับ</p>
+    </div>
+  </div>
+
+  <!-- 1 Week Before -->
+  <h3 style="font-size:1em;font-weight:700;color:var(--gray-700);margin-bottom:12px;display:flex;align-items:center;gap:8px;">
+    <span style="background:var(--green-600);color:white;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8em;">1W</span>
+    1 สัปดาห์ก่อน — เตรียมข้อมูล
+  </h3>
+
+  <div class="grid-2 mb-4">
+    <div class="card">
+      <div class="card-header" style="background:var(--green-50);">
+        <span>📂</span>
+        <h3>อัปโหลดข้อมูล SAP Baseline</h3>
+      </div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">1</div>
+            <div class="text">
+              <strong>Admin → SAP Stock Import</strong>
+              <span>อัปโหลด <code>ListofInventoryStock__EN.xlsx</code> จาก Power Automate</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">2</div>
+            <div class="text">
+              <strong>อัปโหลด Location Master</strong>
+              <span>ไฟล์ <code>Location_Master.xlsx</code> (8 คอลัมน์: ID, Desc, Group, Factory, Type, Level, Team, DateCount)</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">3</div>
+            <div class="text">
+              <strong>อัปโหลด Team Definitions</strong>
+              <span>ไฟล์ <code>Team_Name.xlsx</code> (7 คอลัมน์: Team Code, Emp ID, Name, Nick, Role, Dept, Position)</span>
+            </div>
+          </li>
+        </ul>
+        <div class="alert alert-warn mt-4" style="margin-bottom:0;">
+          <div class="alert-icon">⚠️</div>
+          <div><strong>Virtual Bins ถูกกรองออกอัตโนมัติ</strong> — โลเคชั่นที่ Type = "Virtual" จะไม่ถูกรวมในการนับ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="background:var(--green-50);">
+        <span>📄</span>
+        <h3>สร้าง Count Sheets</h3>
+      </div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">1</div>
+            <div class="text">
+              <strong>ใบนับ → กด "สร้างใบนับ"</strong>
+              <span>กรองด้วย Date (01/07 หรือ 02/07) + Department Group</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">2</div>
+            <div class="text">
+              <strong>ระบบสร้างใบนับ ≤25 รายการ/ใบ</strong>
+              <span>เรียงตาม Walk Order (เดินตามทางเดิน) ไม่ข้ามวิธีนับ (Barcode/Smart)</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">3</div>
+            <div class="text">
+              <strong>ตรวจสอบและพิมพ์ใบนับ</strong>
+              <span>กด Print — ระบบเพิ่มจำนวนครั้งพิมพ์ (print_count) อัตโนมัติ</span>
+            </div>
+          </li>
+        </ul>
+        <div class="alert alert-info mt-4" style="margin-bottom:0;">
+          <div class="alert-icon">📊</div>
+          <div>วันที่ 1 (3 ก.ค.): กรอง <strong>DateCount = 01/07</strong> — วันที่ 2 (6 ก.ค.): กรอง <strong>DateCount = 02/07</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User PC Assignment -->
+  <div class="card mb-4">
+    <div class="card-header" style="background:var(--blue-800);">
+      <span style="color:white;">🖥️</span>
+      <h3 style="color:white;">กำหนด User → PC1 หรือ PC2</h3>
+      <span class="sub" style="color:rgba(255,255,255,.6);">ต้องทำก่อนวันนับ</span>
+    </div>
+    <div class="card-body">
+      <div class="grid-2">
+        <div>
+          <p style="font-size:.85em;font-weight:700;margin-bottom:10px;">วิธีกำหนด server_node ผ่าน Admin</p>
+          <ul class="step-list">
+            <li>
+              <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">1</div>
+              <div class="text">
+                <strong>Admin → User Management</strong>
+                <span>ค้นหา User หรือกรองตามทีม</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">2</div>
+              <div class="text">
+                <strong>แก้ไข User → เปลี่ยน Server Node</strong>
+                <span>เลือก PC1 หรือ PC2 ตามที่กำหนดในแผนนับ</span>
+              </div>
+            </li>
+            <li>
+              <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">3</div>
+              <div class="text">
+                <strong>หรือ Bulk Upload ทีมทั้งหมดพร้อมกัน</strong>
+                <span>อัปโหลด Excel ที่มีคอลัมน์ server_node = PC1/PC2</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <table class="data-table">
+            <thead>
+              <tr><th>ทีม</th><th>PC</th><th>เหตุผล</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>WH / RM ทั้งหมด</td><td><span class="tag tag-blue">PC1</span></td><td>ฐานข้อมูลหลัก</td></tr>
+              <tr><td>Factory / โรงงาน</td><td><span class="tag tag-blue">PC1</span></td><td>ฐานข้อมูลหลัก</td></tr>
+              <tr><td>FG / PD1–PD5 / PD9</td><td><span class="tag tag-green">PC2</span></td><td>กระจาย WiFi load</td></tr>
+              <tr><td>Sales / Service</td><td><span class="tag tag-blue">PC1</span></td><td>ฐานข้อมูลหลัก</td></tr>
+            </tbody>
+          </table>
+          <div class="alert alert-warn mt-4" style="margin-bottom:0;">
+            <div class="alert-icon">🚨</div>
+            <div>หาก PC2 ล่ม → ให้ FG Teams เปลี่ยนมาต่อ PC1 <strong>ทันที</strong> ข้อมูลไม่สูญหาย (DB อยู่บน PC1)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Day Before -->
+  <h3 style="font-size:1em;font-weight:700;color:var(--gray-700);margin-bottom:12px;margin-top:28px;display:flex;align-items:center;gap:8px;">
+    <span style="background:var(--amber-500);color:white;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8em;">D-1</span>
+    วันก่อนนับ — ตรวจสอบและเตรียม
+  </h3>
+
+  <div class="grid-3 mb-4">
+    <div class="card">
+      <div class="card-header"><span>🔍</span><h3>ตรวจสอบระบบ</h3></div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li><div class="check-box"></div><span>PC1 เปิดเครื่อง ต่อ WiFi WIFI_PIC</span></li>
+          <li><div class="check-box"></div><span>PC2 เปิดเครื่อง ต่อ WiFi</span></li>
+          <li><div class="check-box"></div><span>รัน <code>start.bat</code> บน PC1</span></li>
+          <li><div class="check-box"></div><span>รัน CWxStockTakeFG task บน PC2</span></li>
+          <li><div class="check-box"></div><span>Health check: <code>/api/v1/health</code> → 200 OK</span></li>
+          <li><div class="check-box"></div><span>ทดสอบ login จากมือถือ</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span>👥</span><h3>เตรียมทีม</h3></div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li><div class="check-box"></div><span>พิมพ์ใบนับ (Count Sheet) ทุกทีม</span></li>
+          <li><div class="check-box"></div><span>แจกใบนับให้หัวหน้าทีม</span></li>
+          <li><div class="check-box"></div><span>ทดสอบ login Account ทุกคน</span></li>
+          <li><div class="check-box"></div><span>แจ้ง URL ตาม PC ที่กำหนด</span></li>
+          <li><div class="check-box"></div><span>สอนวิธีติดตั้ง CA Certificate</span></li>
+          <li><div class="check-box"></div><span>สอนวิธีนับตามแต่ละ method</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span>⚙️</span><h3>ตั้งค่า Sessions</h3></div>
+      <div class="card-body">
+        <ul class="checklist">
+          <li><div class="check-box"></div><span>Session ทุกทีมสร้างไว้แล้ว (Draft)</span></li>
+          <li><div class="check-box"></div><span>Count Groups ถูกต้อง (WH/FG/PD)</span></li>
+          <li><div class="check-box"></div><span>Method ถูกต้อง (Barcode/Smart/GoPro)</span></li>
+          <li><div class="check-box"></div><span>Count Sheets assign ครบทุกทีม</span></li>
+          <li><div class="check-box"></div><span>ตรวจสอบว่า Simulation data ถูกลบแล้ว</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Morning of Count Day -->
+  <h3 style="font-size:1em;font-weight:700;color:var(--gray-700);margin-bottom:12px;margin-top:28px;display:flex;align-items:center;gap:8px;">
+    <span style="background:var(--blue-700);color:white;width:28px;height:28px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.8em;">AM</span>
+    เช้าวันนับ — เปิด Session และตรวจสอบ
+  </h3>
+
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="flow">
+        <div class="flow-step" style="background:var(--blue-50);">
+          <div class="ico">🖥️</div>
+          <div class="lbl">Start Servers</div>
+          <div class="sub">PC1 + PC2</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--amber-50);">
+          <div class="ico">🔓</div>
+          <div class="lbl">Activate Sessions</div>
+          <div class="sub">Draft → Active</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--green-50);">
+          <div class="ico">📡</div>
+          <div class="lbl">Test Connectivity</div>
+          <div class="sub">มือถือทุกเครื่อง</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--purple-50);">
+          <div class="ico">🚀</div>
+          <div class="lbl">เริ่มนับ!</div>
+          <div class="sub">แจ้งทุกทีม</div>
+        </div>
+      </div>
+
+      <div class="alert alert-danger mt-4" style="margin-bottom:0;">
+        <div class="alert-icon">🚨</div>
+        <div>
+          <strong>⛔ ลบ Simulation Data ก่อนวันนับจริงทุกครั้ง!</strong>
+          <code style="display:block;margin-top:6px;font-size:.82em;background:rgba(0,0,0,.08);padding:8px;border-radius:6px;line-height:1.8;">
+            DELETE FROM reconciliation_lines WHERE recon_session_id IN (SELECT id FROM reconciliation_sessions WHERE organization_id = '01b44ec3-...');<br>
+            DELETE FROM reconciliation_sessions WHERE organization_id = '01b44ec3-...';<br>
+            DELETE FROM floor_counts WHERE organization_id = '01b44ec3-...';<br>
+            UPDATE stock_sessions SET status='draft' WHERE organization_id = '01b44ec3-...';
+          </code>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 3 — IC TEAM MANAGING SESSIONS
+═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="section-header theme-ic">
+    <div class="section-icon">⚙️</div>
+    <div>
+      <div class="audience-badge">🛡️ สำหรับ: Inventory Control Team</div>
+      <h2>จัดการ Count Session ระหว่างนับ</h2>
+      <p>วิธี Swap ทีม, เปลี่ยนใบนับ, เพิ่มทีม, และตรวจสอบความคืบหน้า</p>
+    </div>
+  </div>
+
+  <div class="grid-2 mb-4">
+    <!-- Swap Teams -->
+    <div class="card">
+      <div class="card-header" style="background:var(--blue-50);">
+        <span>🔄</span>
+        <h3>Swap ทีม (สลับทีมทั้งหมด)</h3>
+      </div>
+      <div class="card-body">
+        <p style="font-size:.82em;color:var(--gray-600);margin-bottom:10px;">ใช้เมื่อต้องการสลับใบนับทั้งหมดระหว่างสองทีม</p>
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">1</div>
+            <div class="text">
+              <strong>Admin → Control Center</strong>
+              <span>เข้าหน้าบอร์ดแบบ drag-and-drop</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">2</div>
+            <div class="text">
+              <strong>กด ⋮ ที่หัวคอลัมน์ทีม → "Swap with Team"</strong>
+              <span>เลือกทีมที่ต้องการสลับ</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">3</div>
+            <div class="text">
+              <strong>ยืนยัน → ระบบสลับใบนับทั้งหมด</strong>
+              <span>บันทึกลง count_sheet_reassignments อัตโนมัติ</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Reassign Sheet -->
+    <div class="card">
+      <div class="card-header" style="background:var(--green-50);">
+        <span>📋</span>
+        <h3>Reassign ใบนับรายใบ</h3>
+      </div>
+      <div class="card-body">
+        <p style="font-size:.82em;color:var(--gray-600);margin-bottom:10px;">ใช้เมื่อต้องการย้ายใบนับบางใบไปทีมอื่น</p>
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">1</div>
+            <div class="text">
+              <strong>Control Center → ลาก Card ใบนับ</strong>
+              <span>ลากจากคอลัมน์ทีมเดิมไปยังคอลัมน์ทีมใหม่</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">2</div>
+            <div class="text">
+              <strong>กล่อง Dialog ถาม: Reassign หรือ Add as Helper?</strong>
+              <span>Reassign = เปลี่ยน owner / Helper = เพิ่มผู้ช่วย</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--green-100);color:var(--green-800);">3</div>
+            <div class="text">
+              <strong>ยืนยัน — บันทึก Audit Log อัตโนมัติ</strong>
+              <span>ดูประวัติการเปลี่ยนแปลงได้ใน count_sheet_reassignments</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Add Team -->
+    <div class="card">
+      <div class="card-header" style="background:var(--amber-50);">
+        <span>➕</span>
+        <h3>เพิ่มทีมใหม่ / เพิ่มสมาชิก</h3>
+      </div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--amber-100);color:var(--amber-700);">1</div>
+            <div class="text">
+              <strong>Admin → Setup → Team Definitions</strong>
+              <span>เพิ่ม Row ใหม่: Team Code, Emp ID, Name, Nick, Role</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--amber-100);color:var(--amber-700);">2</div>
+            <div class="text">
+              <strong>อัปโหลด Team Excel ใหม่</strong>
+              <span>ระบบ Merge — ไม่ลบ Team Code เดิมที่ไม่อยู่ในไฟล์ใหม่</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--amber-100);color:var(--amber-700);">3</div>
+            <div class="text">
+              <strong>Assign Count Sheet ให้ทีมใหม่</strong>
+              <span>ใช้ Control Center drag ใบนับมาให้</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Monitor Progress -->
+    <div class="card">
+      <div class="card-header" style="background:var(--purple-50);">
+        <span>📊</span>
+        <h3>ติดตามความคืบหน้า</h3>
+      </div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">1</div>
+            <div class="text">
+              <strong>Dashboard → เห็น Progress % ทุก Session</strong>
+              <span>Real-time ผ่าน Socket.IO — ไม่ต้อง Refresh หน้า</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">2</div>
+            <div class="text">
+              <strong>Count Sheets → กรองตาม Status</strong>
+              <span>Pending / In Progress / Completed / Committed</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">3</div>
+            <div class="text">
+              <strong>Variance Review → ดู SKU ที่ต่างมาก</strong>
+              <span>กรองตาม Threshold ที่ตั้งไว้ใน Count Settings</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Session Status Flow -->
+  <div class="card">
+    <div class="card-header">
+      <span>🔄</span>
+      <h3>สถานะ Session — ทิศทางเดียวเท่านั้น (ย้อนกลับไม่ได้)</h3>
+    </div>
+    <div class="card-body">
+      <div class="flow">
+        <div class="flow-step" style="background:var(--gray-100);">
+          <div class="ico">📝</div>
+          <div class="lbl">Draft</div>
+          <div class="sub">เตรียม</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--green-100);">
+          <div class="ico">▶️</div>
+          <div class="lbl">Active</div>
+          <div class="sub">กำลังนับ</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--amber-100);">
+          <div class="ico">⏸️</div>
+          <div class="lbl">Paused</div>
+          <div class="sub">หยุดชั่วคราว</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--blue-100);">
+          <div class="ico">✅</div>
+          <div class="lbl">Completed</div>
+          <div class="sub">นับเสร็จ</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--purple-100);">
+          <div class="ico">📊</div>
+          <div class="lbl">Reconciled</div>
+          <div class="sub">กระทบยอด</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step" style="background:var(--gray-200);">
+          <div class="ico">🗄️</div>
+          <div class="lbl">Archived</div>
+          <div class="sub">เก็บถาวร</div>
+        </div>
+      </div>
+      <div class="alert alert-danger mt-4" style="margin-bottom:0;">
+        <div class="alert-icon">⛔</div>
+        <div><strong>สถานะ Session ย้อนกลับไม่ได้</strong> — เมื่อ Complete แล้ว แก้ไขได้แค่ผ่านขั้นตอน Reconciliation เท่านั้น</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 4 — FIXING ERRORS
+═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="s4">
+  <div class="section-header theme-ic">
+    <div class="section-icon">🔧</div>
+    <div>
+      <div class="audience-badge">🛡️ สำหรับ: Inventory Control Team</div>
+      <h2>แก้ไขข้อผิดพลาดระหว่างนับ</h2>
+      <p>วิธีจัดการกับตัวเลขผิดพลาด, สินค้าผิดตัว, โลเคชั่นผิด</p>
+    </div>
+  </div>
+
+  <div class="alert alert-info mb-4">
+    <div class="alert-icon">🔑</div>
+    <div><strong>เฉพาะ Admin / Supervisor เท่านั้น</strong> ที่แก้ไขข้อมูลได้ ทีมนับ Counter ต้องแจ้ง IC Team และรอการอนุมัติ</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-header" style="background:var(--red-50);"><span>✏️</span><h3>แก้ไขตัวเลขจำนวน</h3></div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">1</div>
+            <div class="text">
+              <strong>ไปที่ Count Sheet ที่ต้องการแก้ไข</strong>
+              <span>Admin → Sessions → เลือก Session → ค้นหา SKU</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">2</div>
+            <div class="text">
+              <strong>กดปุ่ม Edit (✏️) ที่แถวนั้น</strong>
+              <span>แก้ไขจำนวน → กด Save</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">3</div>
+            <div class="text">
+              <strong>ระบบบันทึก Audit Log อัตโนมัติ</strong>
+              <span>เก็บทั้งตัวเลขเก่าและตัวเลขใหม่ พร้อม User ที่แก้ไข</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="background:var(--red-50);"><span>🗑️</span><h3>ลบข้อมูลนับผิด</h3></div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">1</div>
+            <div class="text">
+              <strong>Admin → Sessions → Floor Counts</strong>
+              <span>ค้นหาแถวที่ผิดด้วย Location + Product ID</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">2</div>
+            <div class="text">
+              <strong>กดลบ → ยืนยัน</strong>
+              <span>Counter สามารถนับใหม่ได้หลังจาก Admin ลบให้</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">3</div>
+            <div class="text">
+              <strong>แจ้ง Counter ให้นับใหม่</strong>
+              <span>สแกนโลเคชั่นและสินค้าใหม่ตามปกติ</span>
+            </div>
+          </li>
+        </ul>
+        <div class="alert alert-warn mt-4" style="margin-bottom:0;">
+          <div class="alert-icon">⚠️</div>
+          <div>UPSERT constraint: 1 row ต่อ (session, location, product) การนับซ้ำจะ <strong>เขียนทับ</strong>ค่าเดิมอัตโนมัติ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="background:var(--red-50);"><span>📍</span><h3>สินค้าอยู่ผิดโลเคชั่น</h3></div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">1</div>
+            <div class="text">
+              <strong>ลบข้อมูลที่ Location ผิด</strong>
+              <span>Admin → ลบแถวนั้นออก</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">2</div>
+            <div class="text">
+              <strong>Counter นับใหม่ที่ Location ถูกต้อง</strong>
+              <span>สแกน Location บาร์โค้ดใหม่ → สแกน Product → ป้อนจำนวน</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" style="background:var(--red-50);"><span>🔍</span><h3>Variance ผิดปกติมาก</h3></div>
+      <div class="card-body">
+        <ul class="step-list">
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">1</div>
+            <div class="text">
+              <strong>Variance Review → กรอง High Value</strong>
+              <span>ดู SKU ที่มี Financial Variance เกิน Threshold</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">2</div>
+            <div class="text">
+              <strong>ส่ง Counter กลับไปนับ Verify</strong>
+              <span>ใช้ Photo Evidence เปรียบเทียบกับตัวเลขที่นับ</span>
+            </div>
+          </li>
+          <li>
+            <div class="step-num" style="background:var(--red-100);color:var(--red-700);">3</div>
+            <div class="text">
+              <strong>ถ้าตัวเลขถูกต้อง → Accept Variance</strong>
+              <span>บันทึก Decision Note อธิบายเหตุผล</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 5 — AFTER COUNT
+═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="s5">
+  <div class="section-header theme-ic">
+    <div class="section-icon">📊</div>
+    <div>
+      <div class="audience-badge">🛡️ สำหรับ: Inventory Control Team</div>
+      <h2>หลังนับเสร็จ — ปิด Session และตรวจสอบ</h2>
+      <p>ขั้นตอนหลังทีมนับส่งงานครบแล้ว</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--blue-100);">🔍</div>
+        <div class="dot-label">ตรวจสอบ<br>ความครบ</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>ตรวจสอบว่านับครบทุก Location</h3></div>
+          <div class="card-body">
+            <div class="grid-2">
+              <ul class="step-list">
+                <li>
+                  <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">1</div>
+                  <div class="text">
+                    <strong>Sessions → เช็ค Progress Bar</strong>
+                    <span>ควรเป็น 100% ทุก Session ก่อน Complete</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">2</div>
+                  <div class="text">
+                    <strong>Count Sheets → กรอง Status = "Pending"</strong>
+                    <span>ถ้ายังมี Pending → ส่ง Counter กลับไปนับ</span>
+                  </div>
+                </li>
+              </ul>
+              <ul class="step-list">
+                <li>
+                  <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">3</div>
+                  <div class="text">
+                    <strong>Location ที่ไม่มีสินค้า SAP → ตรวจว่า Skip</strong>
+                    <span>สินค้าที่หาไม่เจอในคลังต้องบันทึกเป็น 0</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--blue-100);color:var(--blue-700);">4</div>
+                  <div class="text">
+                    <strong>Variance Review — ดู SKU ที่ต่างเยอะ</strong>
+                    <span>พิจารณาว่าต้องนับซ้ำหรือ Accept</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--green-100);">✅</div>
+        <div class="dot-label">Complete<br>Session</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>Complete Session ทุก Session ที่นับเสร็จแล้ว</h3></div>
+          <div class="card-body">
+            <ul class="step-list">
+              <li>
+                <div class="step-num" style="background:var(--green-100);color:var(--green-800);">1</div>
+                <div class="text">
+                  <strong>Sessions → เลือก Session → "Complete"</strong>
+                  <span>Status เปลี่ยนเป็น Completed, ตั้งค่า completed_at timestamp</span>
+                </div>
+              </li>
+              <li>
+                <div class="step-num" style="background:var(--green-100);color:var(--green-800);">2</div>
+                <div class="text">
+                  <strong>ทำซ้ำทุก Session จนครบทุกทีม</strong>
+                  <span>วันที่ 1 (WH/RM/FG) และวันที่ 2 (PD/Factory) แยกกัน</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 6 — RECONCILIATION
+═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="s6">
+  <div class="section-header theme-recon">
+    <div class="section-icon">🔁</div>
+    <div>
+      <div class="audience-badge">📊 สำหรับ: Inventory Control Team + ผู้จัดการ</div>
+      <h2>การกระทบยอด (Reconciliation)</h2>
+      <p>กระทบยอดวันที่ 1 (3 ก.ค.) และวันที่ 2 (6 ก.ค.) แยกกัน แล้วรวม Company Total</p>
+    </div>
+  </div>
+
+  <!-- 3-Bucket Model -->
+  <div class="card mb-4">
+    <div class="card-header" style="background:var(--purple-800,#4c1d95);">
+      <span style="color:white;">🪣</span>
+      <h3 style="color:white;">3-Bucket Reconciliation Model</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid-3">
+        <div style="border-radius:10px;background:var(--blue-50);border:1px solid var(--blue-400);padding:16px;">
+          <div style="font-size:1.8em;margin-bottom:8px;">🅰️</div>
+          <div style="font-weight:800;font-size:.95em;color:var(--blue-800);">Bucket A — Match</div>
+          <div style="font-size:.8em;color:var(--gray-600);margin-top:6px;line-height:1.6;">
+            นับแล้ว + มี SAP baseline<br>
+            คำนวณ Variance = นับ − SAP<br>
+            <strong>GR</strong> ถ้า Qty+ / <strong>GI</strong> ถ้า Qty−
+          </div>
+        </div>
+        <div style="border-radius:10px;background:var(--green-50);border:1px solid var(--green-600);padding:16px;">
+          <div style="font-size:1.8em;margin-bottom:8px;">🅱️</div>
+          <div style="font-weight:800;font-size:.95em;color:var(--green-800);">Bucket B — Found</div>
+          <div style="font-size:.8em;color:var(--gray-600);margin-top:6px;line-height:1.6;">
+            นับแล้ว แต่ไม่มีใน SAP baseline<br>
+            สินค้าที่ไม่เคยถูกบันทึก<br>
+            <strong>GR ทั้งหมด</strong> (เพิ่มเข้า SAP)
+          </div>
+        </div>
+        <div style="border-radius:10px;background:var(--red-50);border:1px solid var(--red-700);padding:16px;">
+          <div style="font-size:1.8em;margin-bottom:8px;">🅲</div>
+          <div style="font-weight:800;font-size:.95em;color:var(--red-700);">Bucket C — Missing</div>
+          <div style="font-size:.8em;color:var(--gray-600);margin-top:6px;line-height:1.6;">
+            มีใน SAP แต่ไม่ถูกนับ<br>
+            Location นอกขอบเขต / Virtual<br>
+            <strong>GI ทั้งหมด</strong> (ตัดออก SAP)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step by Step Reconciliation -->
+  <h3 style="font-size:1em;font-weight:700;color:var(--gray-700);margin-bottom:16px;">ขั้นตอนกระทบยอดทีละ Step</h3>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--purple-100);">🔨</div>
+        <div class="dot-label">Build<br>Recon</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>สร้าง Reconciliation Session</h3></div>
+          <div class="card-body">
+            <div class="grid-2">
+              <ul class="step-list">
+                <li>
+                  <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">1</div>
+                  <div class="text">
+                    <strong>Reports → Recon Pivot & Net Posting</strong>
+                    <span>หน้ารายงานหลักสำหรับกระทบยอด</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">2</div>
+                  <div class="text">
+                    <strong>เลือก Session → กด "Build Reconciliation"</strong>
+                    <span>ระบบสร้าง Reconciliation Session อัตโนมัติ</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">3</div>
+                  <div class="text">
+                    <strong>รอระบบประมวลผล (3-Bucket)</strong>
+                    <span>จัดกลุ่ม A/B/C ตาม SAP baseline vs counted data</span>
+                  </div>
+                </li>
+              </ul>
+              <div class="alert alert-info" style="margin:0;">
+                <div class="alert-icon">ℹ️</div>
+                <div>สามารถ Build ซ้ำได้ — ถ้า Build ซ้ำ ระบบจะคืน UUID ของ Recon ที่มีอยู่แล้ว ไม่สร้างใหม่</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--purple-100);">📊</div>
+        <div class="dot-label">Pivot<br>Summary</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>ตรวจสอบ Pivot Summary — สรุปตามโซน</h3></div>
+          <div class="card-body">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>โซน</th>
+                  <th>SAP On-Hand</th>
+                  <th>ที่นับได้</th>
+                  <th>Variance Qty</th>
+                  <th>Variance ฿</th>
+                  <th>GR (+)</th>
+                  <th>GI (−)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>WAREHOUSE</strong></td>
+                  <td class="font-mono">ดูจาก App</td>
+                  <td class="font-mono">ดูจาก App</td>
+                  <td class="font-mono" style="color:var(--red-700);">ดูจาก App</td>
+                  <td class="font-mono" style="color:var(--red-700);">ดูจาก App</td>
+                  <td class="font-mono" style="color:var(--green-600);">ดูจาก App</td>
+                  <td class="font-mono" style="color:var(--red-700);">ดูจาก App</td>
+                </tr>
+                <tr>
+                  <td><strong>WAREHOUSE FG</strong></td>
+                  <td colspan="6" class="text-muted text-sm">แสดงข้อมูลเดียวกัน แยกตามโซน</td>
+                </tr>
+                <tr>
+                  <td><strong>PD (Factory)</strong></td>
+                  <td colspan="6" class="text-muted text-sm">วันที่ 2 เท่านั้น</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size:.78em;color:var(--gray-500);margin-top:8px;">💡 KPI Banner ด้านบนแสดง Company Total — รวมทุกโซน</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--purple-100);">📋</div>
+        <div class="dot-label">SKU<br>Detail</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>ตรวจสอบ SKU Detail — รายละเอียดรายสินค้า</h3></div>
+          <div class="card-body">
+            <ul class="step-list">
+              <li>
+                <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">1</div>
+                <div class="text">
+                  <strong>แท็บ "SKU Detail"</strong>
+                  <span>แสดงทุก SKU พร้อม SAP Qty, Counted Qty, Variance, Unit Cost, Financial Variance</span>
+                </div>
+              </li>
+              <li>
+                <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">2</div>
+                <div class="text">
+                  <strong>กรอง SKU ที่มี Variance มาก</strong>
+                  <span>ตรวจสอบว่านับถูกต้องหรือต้องแก้ไข</span>
+                </div>
+              </li>
+              <li>
+                <div class="step-num" style="background:var(--purple-100);color:var(--purple-700);">3</div>
+                <div class="text">
+                  <strong>PATCH /reconciliation/:id/lines/:lid/decide</strong>
+                  <span>ระบุ Decision (approve/reject/review) + Decision Note ทุก SKU ที่มี Variance</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--purple-100);">💸</div>
+        <div class="dot-label">Net<br>Posting</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>Net Posting (SAP) — รายการที่ต้องส่ง SAP</h3></div>
+          <div class="card-body">
+            <div class="grid-2">
+              <div>
+                <p style="font-size:.82em;font-weight:700;margin-bottom:10px;color:var(--green-800);">📈 GR (Goods Receipt) — สินค้าขาดบัญชี</p>
+                <div style="background:var(--green-50);border:1px solid var(--green-600);border-radius:8px;padding:12px;font-size:.82em;">
+                  นับได้ &gt; SAP → ต้องรับเข้า SAP<br>
+                  <strong>ผลกระทบ: เพิ่ม Stock Value (+)</strong>
+                </div>
+              </div>
+              <div>
+                <p style="font-size:.82em;font-weight:700;margin-bottom:10px;color:var(--red-700);">📉 GI (Goods Issue) — สินค้าเกินบัญชี</p>
+                <div style="background:var(--red-50);border:1px solid var(--red-700);border-radius:8px;padding:12px;font-size:.82em;">
+                  นับได้ &lt; SAP → ต้องตัดออก SAP<br>
+                  <strong>ผลกระทบ: ลด Stock Value (−)</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 1 vs Day 2 -->
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--purple-100);">📅</div>
+        <div class="dot-label">วันที่ 1<br>vs 2</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>กระทบยอดวันที่ 1 และ วันที่ 2 แยกกัน</h3></div>
+          <div class="card-body">
+            <table class="data-table">
+              <thead>
+                <tr><th>รายการ</th><th>วันที่ 1 (3 ก.ค.)</th><th>วันที่ 2 (6 ก.ค.)</th><th>Company Total</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>พื้นที่</td>
+                  <td>WH / RM / FG</td>
+                  <td>โรงงาน PD / Factory</td>
+                  <td>ทุกพื้นที่รวม</td>
+                </tr>
+                <tr>
+                  <td>Sessions</td>
+                  <td>~23 Sessions</td>
+                  <td>~18 Sessions</td>
+                  <td>~41 Sessions</td>
+                </tr>
+                <tr>
+                  <td>Build Recon</td>
+                  <td>Build ทีละ Session หรือ Day-1 Group</td>
+                  <td>Build ทีละ Session หรือ Day-2 Group</td>
+                  <td>รวม Report ทั้งหมด</td>
+                </tr>
+                <tr>
+                  <td>SAP Posting</td>
+                  <td>ส่งหลังอนุมัติ Day-1</td>
+                  <td>ส่งหลังอนุมัติ Day-2</td>
+                  <td>Net ของทั้ง 2 วัน</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     SECTION 7 — FINALIZATION
+═══════════════════════════════════════════════════════════════ -->
+<div class="section" id="s7">
+  <div class="section-header theme-final">
+    <div class="section-icon">✅</div>
+    <div>
+      <div class="audience-badge">✅ สำหรับ: IC Team + CFO / ผู้อนุมัติ</div>
+      <h2>สรุปผลสต๊อกและส่งออกข้อมูล</h2>
+      <p>อนุมัติ Reconciliation และส่งข้อมูลไปยัง SAP ByDesign</p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--teal-100);">✍️</div>
+        <div class="dot-label">อนุมัติ<br>Recon</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>อนุมัติ Reconciliation</h3></div>
+          <div class="card-body">
+            <ul class="step-list">
+              <li>
+                <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">1</div>
+                <div class="text">
+                  <strong>ตรวจสอบ Net Posting ทั้งหมด</strong>
+                  <span>CFO / ผู้จัดการตรวจสอบตัวเลข GR/GI ทุกรายการ</span>
+                </div>
+              </li>
+              <li>
+                <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">2</div>
+                <div class="text">
+                  <strong>กด "Approve Reconciliation"</strong>
+                  <span>POST /reconciliation/:id/approve — Lock ข้อมูล ไม่สามารถแก้ไขได้อีก</span>
+                </div>
+              </li>
+              <li>
+                <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">3</div>
+                <div class="text">
+                  <strong>ระบบ Queue รายการลงใน ERP Outbox</strong>
+                  <span>เตรียมส่งไปยัง SAP ByDesign ในขั้นตอนถัดไป</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--teal-100);">📤</div>
+        <div class="dot-label">ส่ง<br>SAP</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header"><h3>ส่งข้อมูลไปยัง SAP ByDesign (ERP Outbox)</h3></div>
+          <div class="card-body">
+            <div class="grid-2">
+              <ul class="step-list">
+                <li>
+                  <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">1</div>
+                  <div class="text">
+                    <strong>ERP Outbox → ดูรายการที่รอส่ง</strong>
+                    <span>Status = "pending" → "processing" → "posted"</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">2</div>
+                  <div class="text">
+                    <strong>ระบบส่งผ่าน SAP ByD SOAP API</strong>
+                    <span>Location Transfer Posting (cc_adjustments)</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">3</div>
+                  <div class="text">
+                    <strong>ตรวจสอบ SAP Document Reference</strong>
+                    <span>sap_document_ref บันทึกกลับมาใน adjustment_status = 'sap_posted'</span>
+                  </div>
+                </li>
+              </ul>
+              <div>
+                <div class="alert alert-success" style="margin-bottom:12px;">
+                  <div class="alert-icon">✅</div>
+                  <div><strong>สำเร็จ</strong> — status = "sap_posted" และมี Document Number จาก SAP</div>
+                </div>
+                <div class="alert alert-danger" style="margin-bottom:0;">
+                  <div class="alert-icon">❌</div>
+                  <div><strong>ล้มเหลว</strong> — ดู error log แจ้ง IT เพื่อ Post manual ใน SAP</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot">
+        <div class="dot-circle" style="background:var(--teal-100);">📁</div>
+        <div class="dot-label">Archive<br>& Close</div>
+      </div>
+      <div class="timeline-content">
+        <div class="card">
+          <div class="card-header" style="background:var(--teal-50);"><h3>Archive และปิดงาน</h3></div>
+          <div class="card-body">
+            <div class="grid-2">
+              <ul class="step-list">
+                <li>
+                  <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">1</div>
+                  <div class="text">
+                    <strong>Sessions → Reconciled → Archive</strong>
+                    <span>เก็บถาวรทุก Session เมื่อ Post SAP เสร็จสมบูรณ์</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">2</div>
+                  <div class="text">
+                    <strong>Export Reconciliation Report</strong>
+                    <span>พิมพ์ / ส่งออก PDF สรุปผลให้ CFO และทีมบัญชี</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="step-num" style="background:var(--teal-100);color:var(--teal-700);">3</div>
+                  <div class="text">
+                    <strong>ตรวจสอบ Stock Value ใน SAP ByD</strong>
+                    <span>Inventory Balance หลัง Posting ควรตรงกับ Counted Value</span>
+                  </div>
+                </li>
+              </ul>
+              <div class="card" style="background:var(--gray-50);">
+                <div class="card-body">
+                  <p style="font-weight:700;font-size:.85em;margin-bottom:10px;">📋 Checklist ปิดงาน</p>
+                  <ul class="checklist">
+                    <li><div class="check-box"></div><span>ERP Outbox ทุกรายการ = sap_posted</span></li>
+                    <li><div class="check-box"></div><span>Reconciliation ทุก Session = Approved</span></li>
+                    <li><div class="check-box"></div><span>Sessions ทุก Session = Archived</span></li>
+                    <li><div class="check-box"></div><span>ส่ง Report สรุปให้ CFO</span></li>
+                    <li><div class="check-box"></div><span>Backup Database หลังนับเสร็จ</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Stats from Simulation -->
+  <div class="card mt-6">
+    <div class="card-header" style="background:var(--gray-900);">
+      <span style="color:white;">📊</span>
+      <h3 style="color:white;">ตัวอย่างผลลัพธ์ (จาก Simulation Test — ไม่ใช่ตัวเลขจริง)</h3>
+    </div>
+    <div class="card-body">
+      <div class="grid-3" style="text-align:center;">
+        <div style="padding:16px;">
+          <div style="font-size:2em;font-weight:800;color:var(--blue-700);">41</div>
+          <div style="font-size:.8em;color:var(--gray-500);">Sessions รวม</div>
+        </div>
+        <div style="padding:16px;">
+          <div style="font-size:2em;font-weight:800;color:var(--amber-500);">4,300</div>
+          <div style="font-size:.8em;color:var(--gray-500);">SKU ที่มี Variance</div>
+        </div>
+        <div style="padding:16px;">
+          <div style="font-size:2em;font-weight:800;color:var(--red-700);">฿92.8M</div>
+          <div style="font-size:.8em;color:var(--gray-500);">Net Variance (Company Total)</div>
+        </div>
+      </div>
+      <div class="alert alert-warn" style="margin-top:8px;margin-bottom:0;">
+        <div class="alert-icon">⚠️</div>
+        <div>ตัวเลขข้างต้นเป็นตัวอย่างจาก Simulation เท่านั้น ตัวเลขจริงจะแสดงหลังนับสต๊อกจริง 3 และ 6 กรกฎาคม 2569</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════ -->
+<div style="background:var(--gray-900);color:rgba(255,255,255,.6);text-align:center;padding:32px;font-size:.8em;margin-top:40px;">
+  <div style="font-size:1.5em;margin-bottom:8px;">❄️</div>
+  <div style="color:white;font-weight:700;margin-bottom:4px;">CWx StockTake — Training Manual</div>
+  <div>บริษัท พัฒนา อินเตอร์คูล จำกัด · Physical Count 3 & 6 กรกฎาคม 2569</div>
+  <div style="margin-top:12px;">
+    <span style="margin:0 12px;">PC1: <code style="color:var(--blue-400);">192.168.1.71:3443</code></span>
+    <span style="margin:0 12px;">PC2: <code style="color:var(--green-400);">192.168.1.88:3443</code></span>
+    <span style="margin:0 12px;">Setup: <code style="color:white;">192.168.1.71:3000/setup/</code></span>
+  </div>
+</div>
+
+<script>
+// Smooth scroll for nav
+document.querySelectorAll('.toc a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+// Highlight active section
+const sections = document.querySelectorAll('.section[id]');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('.toc a').forEach(a => a.style.background='');
+      const link = document.querySelector(`.toc a[href="#${e.target.id}"]`);
+      if (link) { link.style.background='#1d4ed8'; link.style.color='white'; link.style.borderColor='#1d4ed8'; }
+    }
+  });
+}, {threshold:0.3});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

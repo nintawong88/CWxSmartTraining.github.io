@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>คู่มือผู้นับสต๊อก — CWx StockTake</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sarabun',Arial,sans-serif;background:#f0f4f8;color:#1e293b;font-size:13pt;}
+.cover{background:#1e3a5f;color:#fff;padding:28px 24px 24px;text-align:center;page-break-after:always;}
+.cover h1{font-size:26pt;font-weight:800;margin-bottom:6px;line-height:1.2;}
+.cover .sub{font-size:13pt;opacity:.85;margin-bottom:16px;}
+.cover .dates{display:inline-flex;gap:16px;background:rgba(255,255,255,.15);border-radius:20px;padding:8px 20px;font-size:12pt;}
+.cover .dates span{white-space:nowrap;}
+.cover .mascot{margin:18px auto 0;display:block;}
+
+/* character */
+.char{display:inline-block;}
+
+/* section page header */
+.sec-header{padding:14px 20px 10px;display:flex;align-items:center;gap:12px;border-bottom:3px solid currentColor;margin-bottom:0;}
+.sec-header .sec-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.sec-header h2{font-size:17pt;font-weight:800;line-height:1.2;}
+.sec-header p{font-size:11pt;opacity:.8;margin-top:2px;}
+
+.section{background:#fff;border-radius:10px;margin:14px;box-shadow:0 2px 8px rgba(0,0,0,.08);overflow:hidden;page-break-inside:avoid;}
+.section.break{page-break-before:always;}
+
+/* steps row */
+.steps{display:flex;gap:0;overflow:hidden;}
+.step{flex:1;padding:14px 10px 10px;border-right:1px solid #e8edf3;position:relative;}
+.step:last-child{border-right:none;}
+.step-num{width:26px;height:26px;border-radius:50%;font-weight:800;font-size:11pt;display:flex;align-items:center;justify-content:center;color:#fff;margin:0 auto 8px;}
+.step-title{font-weight:700;font-size:11pt;text-align:center;margin-bottom:6px;line-height:1.3;}
+.step-desc{font-size:9.5pt;text-align:center;color:#475569;line-height:1.4;}
+.step-arrow{position:absolute;right:-8px;top:50%;transform:translateY(-50%);font-size:14px;color:#94a3b8;z-index:1;}
+
+/* phone mockup */
+.phone{width:120px;margin:0 auto 6px;background:#1e293b;border-radius:16px;padding:6px;box-shadow:0 4px 12px rgba(0,0,0,.3);}
+.phone-screen{background:#fff;border-radius:10px;overflow:hidden;min-height:160px;}
+.phone-screen .status-bar{background:#f8fafc;height:12px;display:flex;align-items:center;justify-content:flex-end;padding:0 6px;gap:2px;}
+.phone-screen .status-bar span{width:4px;height:4px;border-radius:50%;background:#94a3b8;}
+.screen-body{padding:8px 6px;font-size:8pt;}
+.screen-body .app-header{background:#1e40af;color:#fff;padding:5px 6px;border-radius:5px;font-size:8.5pt;font-weight:700;text-align:center;margin-bottom:6px;}
+.input-field{border:1px solid #e2e8f0;border-radius:4px;padding:4px 6px;font-size:8pt;margin-bottom:4px;color:#374151;display:block;width:100%;}
+.input-field.active{border-color:#2563eb;background:#eff6ff;}
+.btn{display:block;width:100%;padding:5px;border-radius:5px;font-size:8.5pt;font-weight:700;text-align:center;border:none;cursor:pointer;}
+.btn-blue{background:#2563eb;color:#fff;}
+.btn-green{background:#16a34a;color:#fff;}
+.btn-orange{background:#ea580c;color:#fff;}
+.btn-purple{background:#7c3aed;color:#fff;}
+.btn-gray{background:#e2e8f0;color:#374151;}
+
+.session-card{border:1px solid #e2e8f0;border-radius:6px;padding:5px 7px;margin-bottom:4px;font-size:8pt;}
+.session-card .s-title{font-weight:700;color:#1e40af;font-size:8.5pt;}
+.session-card .s-meta{color:#64748b;font-size:7.5pt;}
+.badge{display:inline-block;padding:1px 6px;border-radius:10px;font-size:7.5pt;font-weight:700;}
+.badge-green{background:#dcfce7;color:#15803d;}
+.badge-orange{background:#ffedd5;color:#c2410c;}
+.badge-blue{background:#dbeafe;color:#1d4ed8;}
+.badge-purple{background:#ede9fe;color:#6d28d9;}
+.badge-red{background:#fee2e2;color:#dc2626;}
+
+.scan-box{border:2px dashed #2563eb;border-radius:6px;height:50px;display:flex;align-items:center;justify-content:center;margin:4px 0;background:#eff6ff;}
+.scan-box svg{width:28px;height:28px;}
+.cam-box{background:#1e293b;border-radius:6px;height:60px;display:flex;align-items:center;justify-content:center;margin:4px 0;position:relative;}
+.cam-corners::before,.cam-corners::after{content:'';position:absolute;width:12px;height:12px;border-color:#fff;border-style:solid;}
+.ai-result{background:#f0fdf4;border:1px solid #86efac;border-radius:5px;padding:4px 6px;font-size:7.5pt;margin-top:4px;}
+.ai-result .ai-label{color:#15803d;font-weight:700;}
+
+.loc-row{display:flex;align-items:center;justify-content:space-between;padding:4px 5px;border-bottom:1px solid #f0f4f8;font-size:8pt;}
+.loc-row:last-child{border-bottom:none;}
+.qty-input{border:1.5px solid #3b82f6;border-radius:4px;padding:3px 6px;font-size:10pt;font-weight:700;text-align:center;width:40px;}
+
+/* blind count visual */
+.blind-count{display:flex;gap:6px;margin:10px 14px;}
+.bc-step{flex:1;text-align:center;padding:8px 4px;border-radius:8px;}
+.bc-step .bc-num{width:28px;height:28px;border-radius:50%;margin:0 auto 5px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12pt;color:#fff;}
+.bc-step .bc-title{font-size:9.5pt;font-weight:700;margin-bottom:3px;}
+.bc-step .bc-desc{font-size:8.5pt;color:#64748b;line-height:1.3;}
+.bc-arrow{display:flex;align-items:center;color:#94a3b8;font-size:18px;padding-top:14px;}
+
+/* tip box */
+.tip{background:#fef3c7;border-left:4px solid #f59e0b;border-radius:0 6px 6px 0;padding:8px 12px;margin:10px 14px;font-size:9.5pt;display:flex;gap:8px;align-items:flex-start;}
+.tip .tip-icon{font-size:16px;flex-shrink:0;margin-top:1px;}
+.warning{background:#fee2e2;border-left-color:#ef4444;}
+.success-tip{background:#dcfce7;border-left-color:#16a34a;}
+
+/* method header strip */
+.method-strip{padding:10px 14px 8px;display:flex;align-items:center;gap:10px;}
+.method-strip .method-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.method-strip h3{font-size:14pt;font-weight:800;}
+.method-strip .method-sub{font-size:10pt;margin-top:1px;}
+
+/* gopro item list */
+.gp-item{display:flex;align-items:center;gap:6px;padding:4px 6px;border-bottom:1px solid #f0f4f8;font-size:7.5pt;}
+.gp-item:last-child{border-bottom:none;}
+.gp-photo{width:30px;height:24px;background:#374151;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.gp-photo svg{width:14px;height:14px;}
+.gp-qty{border:1px solid #e2e8f0;border-radius:3px;padding:2px 4px;font-size:8pt;font-weight:700;min-width:28px;text-align:center;}
+.gp-missing{color:#dc2626;font-size:8pt;font-weight:700;}
+
+/* complete section */
+.complete-steps{padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.complete-card{border:1px solid #e2e8f0;border-radius:8px;padding:10px;text-align:center;}
+.complete-card .cc-icon{font-size:24px;margin-bottom:6px;}
+.complete-card .cc-title{font-size:10.5pt;font-weight:700;margin-bottom:3px;}
+.complete-card .cc-desc{font-size:9pt;color:#64748b;line-height:1.3;}
+
+.status-flow{display:flex;align-items:center;gap:4px;padding:10px 14px;flex-wrap:wrap;}
+.status-pill{padding:5px 12px;border-radius:20px;font-size:9.5pt;font-weight:700;white-space:nowrap;}
+
+/* error fix steps */
+.fix-steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px 14px;}
+.fix-card{border-radius:8px;padding:10px;text-align:center;border:1.5px solid transparent;}
+
+@media print{
+  body{background:#fff;}
+  .section{box-shadow:none;border:1px solid #e2e8f0;}
+  .cover{page-break-after:always;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ COVER ═══════════════════ -->
+<div class="cover">
+  <svg class="mascot" width="120" height="130" viewBox="0 0 120 130">
+    <!-- helmet -->
+    <ellipse cx="60" cy="38" rx="28" ry="26" fill="#1e40af"/>
+    <rect x="36" y="38" width="48" height="12" rx="3" fill="#1e40af"/>
+    <rect x="40" y="46" width="40" height="3" fill="#3b82f6"/>
+    <!-- face -->
+    <ellipse cx="60" cy="60" rx="24" ry="22" fill="#fbbf24"/>
+    <!-- eyes -->
+    <ellipse cx="52" cy="56" rx="4" ry="4.5" fill="#fff"/>
+    <ellipse cx="68" cy="56" rx="4" ry="4.5" fill="#fff"/>
+    <circle cx="53" cy="57" r="2.5" fill="#1e293b"/>
+    <circle cx="69" cy="57" r="2.5" fill="#1e293b"/>
+    <circle cx="54" cy="56" r="1" fill="#fff"/>
+    <circle cx="70" cy="56" r="1" fill="#fff"/>
+    <!-- smile -->
+    <path d="M52 66 Q60 74 68 66" stroke="#92400e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- body -->
+    <rect x="38" y="80" width="44" height="38" rx="8" fill="#1e40af"/>
+    <!-- vest -->
+    <rect x="50" y="80" width="20" height="38" rx="2" fill="#1d4ed8"/>
+    <!-- arms -->
+    <rect x="18" y="82" width="22" height="12" rx="6" fill="#1e40af"/>
+    <rect x="80" y="82" width="22" height="12" rx="6" fill="#1e40af"/>
+    <!-- phone in right hand -->
+    <rect x="96" y="80" width="12" height="19" rx="2" fill="#0f172a"/>
+    <rect x="97.5" y="82" width="9" height="14" rx="1" fill="#3b82f6"/>
+    <!-- feet -->
+    <rect x="44" y="116" width="14" height="10" rx="4" fill="#374151"/>
+    <rect x="62" y="116" width="14" height="10" rx="4" fill="#374151"/>
+  </svg>
+  <h1>คู่มือผู้นับสต๊อก</h1>
+  <div class="sub">CWx StockTake — Pattana Intercool</div>
+  <div class="dates">
+    <span>📦 วันที่ 1 — 3 กรกฎาคม 2569</span>
+    <span>🏭 วันที่ 2 — 6 กรกฎาคม 2569</span>
+  </div>
+</div>
+
+<!-- ═══════════════════ 1. GETTING STARTED ═══════════════════ -->
+<div class="section">
+  <div class="sec-header" style="color:#1e40af;border-color:#1e40af;background:#eff6ff;">
+    <div class="sec-icon" style="background:#1e40af;color:#fff;">1</div>
+    <div><h2 style="color:#1e3a5f;">เริ่มต้น — เข้าสู่ระบบ &amp; เปิด Session</h2>
+    <p style="color:#1e40af;">ทุกวิธีนับเริ่มจากขั้นตอนนี้เหมือนกัน</p></div>
+  </div>
+  <div class="steps">
+    <!-- step 1 login -->
+    <div class="step">
+      <div class="step-num" style="background:#1e40af;">1</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header">🧊 CWx StockTake</div>
+            <div style="font-size:7.5pt;color:#64748b;margin-bottom:5px;text-align:center;">เข้าสู่ระบบ</div>
+            <input class="input-field active" value="ชื่อผู้ใช้ (อีเมล)" readonly style="font-size:7.5pt;">
+            <input class="input-field" value="••••••••" readonly style="font-size:7.5pt;">
+            <button class="btn btn-blue" style="margin-top:4px;">เข้าสู่ระบบ</button>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">เปิดแอป &amp; Login</div>
+      <div class="step-desc">เปิด browser → พิมพ์ URL ของ server ใส่ Email + รหัสผ่าน</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <!-- step 2 dashboard -->
+    <div class="step">
+      <div class="step-num" style="background:#1e40af;">2</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header">🏠 หน้าหลัก</div>
+            <div class="session-card">
+              <div class="s-title">RM-01 คลังวัตถุดิบ</div>
+              <div class="s-meta">3 ก.ค. 69 · 24 โลเคชั่น</div>
+              <span class="badge badge-green">Active ●</span>
+            </div>
+            <div class="session-card" style="opacity:.5;">
+              <div class="s-title">FG-01 สินค้าสำเร็จรูป</div>
+              <div class="s-meta">3 ก.ค. 69 · 18 โลเคชั่น</div>
+              <span class="badge badge-orange">Draft</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">เลือก Session</div>
+      <div class="step-desc">แตะ Session ที่มีสถานะ Active (ปุ่มเขียว) ของทีมคุณ</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <!-- step 3 pick method -->
+    <div class="step">
+      <div class="step-num" style="background:#1e40af;">3</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header">📋 Session Detail</div>
+            <div style="font-size:7.5pt;color:#64748b;margin-bottom:4px;">เลือกวิธีนับ:</div>
+            <button class="btn btn-blue" style="margin-bottom:3px;font-size:8pt;">📷 Barcode Scan</button>
+            <button class="btn btn-purple" style="margin-bottom:3px;font-size:8pt;">🤖 Smart Count</button>
+            <button class="btn btn-orange" style="font-size:8pt;">🎥 GoPro Count</button>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">เลือกวิธีนับ</div>
+      <div class="step-desc">หัวหน้าทีมบอกวิธีนับของโลเคชั่นคุณ แตะปุ่มให้ถูกต้อง</div>
+    </div>
+  </div>
+  <div class="tip"><div class="tip-icon">💡</div><div>URL สำหรับ login: <strong>PC1 (WH/RM)</strong> → https://192.168.1.71:3443 | <strong>PC2 (FG/PD)</strong> → https://192.168.1.88:3443</div></div>
+</div>
+
+<!-- ═══════════════════ 2. BARCODE COUNT ═══════════════════ -->
+<div class="section break">
+  <div class="method-strip" style="background:#dbeafe;border-bottom:3px solid #1e40af;">
+    <div class="method-icon" style="background:#1e40af;color:#fff;">📷</div>
+    <div>
+      <h3 style="color:#1e3a5f;">Barcode Scan</h3>
+      <div class="method-sub" style="color:#1d4ed8;">สำหรับชั้นวาง WH ระดับปกติ | ใช้ scanner หรือกล้องมือถือ</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:#1e40af;">1</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header">📷 Barcode Scan</div>
+            <div style="font-size:7.5pt;margin-bottom:4px;color:#374151;">สแกนโลเคชั่น</div>
+            <div class="scan-box">
+              <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="8" height="8" rx="1" stroke="#2563eb" stroke-width="2"/><rect x="28" y="4" width="8" height="8" rx="1" stroke="#2563eb" stroke-width="2"/><rect x="4" y="28" width="8" height="8" rx="1" stroke="#2563eb" stroke-width="2"/><line x1="6" y1="18" x2="34" y2="18" stroke="#2563eb" stroke-width="1.5"/></svg>
+            </div>
+            <input class="input-field" placeholder="หรือพิมพ์รหัส" readonly style="font-size:7.5pt;">
+          </div>
+        </div>
+      </div>
+      <div class="step-title">สแกน Location</div>
+      <div class="step-desc">สแกนบาร์โค้ดติดชั้นวาง หรือพิมพ์รหัสโลเคชั่น</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#1e40af;">2</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header">📦 WHAA0301</div>
+            <div style="font-size:7.5pt;margin-bottom:3px;color:#374151;">สแกนสินค้า</div>
+            <div class="scan-box" style="height:40px;">
+              <svg viewBox="0 0 40 20" fill="none"><rect x="2" y="1" width="3" height="18" fill="#2563eb"/><rect x="7" y="1" width="1.5" height="18" fill="#2563eb"/><rect x="10" y="1" width="3" height="18" fill="#2563eb"/><rect x="15" y="1" width="1.5" height="18" fill="#2563eb"/><rect x="18" y="1" width="4" height="18" fill="#2563eb"/><rect x="24" y="1" width="2" height="18" fill="#2563eb"/><rect x="28" y="1" width="3" height="18" fill="#2563eb"/><rect x="33" y="1" width="1.5" height="18" fill="#2563eb"/></svg>
+            </div>
+            <div class="badge badge-blue" style="font-size:7.5pt;margin-top:3px;">GASK0010082</div>
+            <div style="font-size:7.5pt;color:#374151;margin-top:2px;">ยางประตูตู้แช่</div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">สแกนสินค้า</div>
+      <div class="step-desc">สแกนบาร์โค้ดบนสินค้า ชื่อสินค้าขึ้นอัตโนมัติ</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#1e40af;">3</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header">🔢 ใส่จำนวน</div>
+            <div style="font-size:7.5pt;margin-bottom:2px;color:#374151;text-align:center;">ยางประตูตู้แช่</div>
+            <div style="font-size:7.5pt;color:#64748b;text-align:center;margin-bottom:4px;">SAP: 120 ชิ้น</div>
+            <input class="input-field active" value="118" readonly style="font-size:14pt;font-weight:800;text-align:center;">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:3px;">
+              <button class="btn btn-gray" style="padding:3px;font-size:9pt;">7</button><button class="btn btn-gray" style="padding:3px;font-size:9pt;">8</button><button class="btn btn-gray" style="padding:3px;font-size:9pt;">9</button>
+              <button class="btn btn-gray" style="padding:3px;font-size:9pt;">4</button><button class="btn btn-gray" style="padding:3px;font-size:9pt;">5</button><button class="btn btn-gray" style="padding:3px;font-size:9pt;">6</button>
+              <button class="btn btn-blue" style="padding:3px;font-size:8pt;grid-column:span 3;">✓ ยืนยัน</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">ใส่จำนวน</div>
+      <div class="step-desc">พิมพ์จำนวนที่นับได้ กด ยืนยัน เพื่อบันทึก</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#16a34a;">4</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#16a34a;">✅ บันทึกแล้ว</div>
+            <div class="loc-row">
+              <div>
+                <div style="font-size:7.5pt;font-weight:700;">GASK0010082</div>
+                <div style="font-size:7pt;color:#64748b;">ยางประตูตู้แช่</div>
+              </div>
+              <span class="badge badge-green">118 ชิ้น</span>
+            </div>
+            <div class="loc-row" style="opacity:.4;">
+              <div style="font-size:7.5pt;">COMP0080018</div>
+              <span class="badge badge-orange">รอนับ</span>
+            </div>
+            <div class="loc-row" style="opacity:.4;">
+              <div style="font-size:7.5pt;">WIRE0030045</div>
+              <span class="badge badge-orange">รอนับ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">รายการถัดไป</div>
+      <div class="step-desc">สแกนสินค้าชิ้นถัดไป ทำซ้ำจนครบทุกรายการในโลเคชั่น</div>
+    </div>
+  </div>
+
+  <!-- blind count rule -->
+  <div style="padding:8px 14px 4px;"><strong style="font-size:10.5pt;color:#1e3a5f;">กฎการนับ 3 รอบ (Blind Count)</strong></div>
+  <div class="blind-count">
+    <div class="bc-step" style="background:#dbeafe;">
+      <div class="bc-num" style="background:#1e40af;">1</div>
+      <div class="bc-title" style="color:#1e3a5f;">รอบ 1</div>
+      <div class="bc-desc">นับจริงแล้วใส่จำนวน — ระบบ<strong>ซ่อน</strong>ตัวเลข SAP</div>
+    </div>
+    <div class="bc-arrow">→</div>
+    <div class="bc-step" style="background:#fef3c7;">
+      <div class="bc-num" style="background:#d97706;">2</div>
+      <div class="bc-title" style="color:#92400e;">รอบ 2</div>
+      <div class="bc-desc">ถ้าต่างจาก SAP → ระบบขอนับใหม่ ห้ามดูรอบ 1</div>
+    </div>
+    <div class="bc-arrow">→</div>
+    <div class="bc-step" style="background:#dcfce7;">
+      <div class="bc-num" style="background:#16a34a;">3</div>
+      <div class="bc-title" style="color:#166534;">รอบ 3</div>
+      <div class="bc-desc">ถ้ายังต่าง → รอบ 3 คือ <strong>ตัวเลขสุดท้าย</strong> บันทึกอัตโนมัติ</div>
+    </div>
+  </div>
+  <div class="tip warning"><div class="tip-icon">⚠️</div><div>ห้ามนับซ้ำโดยดูผลจากรอบก่อน — ต้องนับจริงจากของทุกครั้ง เพื่อความแม่นยำ</div></div>
+</div>
+
+<!-- ═══════════════════ 3. SMART COUNT ═══════════════════ -->
+<div class="section break">
+  <div class="method-strip" style="background:#ede9fe;border-bottom:3px solid #7c3aed;">
+    <div class="method-icon" style="background:#7c3aed;color:#fff;">🤖</div>
+    <div>
+      <h3 style="color:#4c1d95;">Smart Count (AI)</h3>
+      <div class="method-sub" style="color:#6d28d9;">ชั้นสูง WHAA–WHFF ระดับ 3-4 | ถ่ายรูปป้ายสินค้า — AI อ่านรหัสให้</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:#7c3aed;">1</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#7c3aed;">🤖 Smart Count</div>
+            <div style="font-size:7.5pt;color:#64748b;margin-bottom:3px;">เลือกโลเคชั่น:</div>
+            <div class="loc-row">
+              <div>
+                <div style="font-size:7.5pt;font-weight:700;">WHAA0301</div>
+                <div style="font-size:7pt;color:#64748b;">ชั้น 3 แถว A</div>
+              </div>
+              <span class="badge badge-orange">รอนับ</span>
+            </div>
+            <div class="loc-row" style="opacity:.5;">
+              <div>
+                <div style="font-size:7.5pt;font-weight:700;">WHAA0401</div>
+                <div style="font-size:7pt;color:#64748b;">ชั้น 4 แถว A</div>
+              </div>
+              <span class="badge badge-orange">รอนับ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">เลือก Location</div>
+      <div class="step-desc">แตะโลเคชั่นที่จะนับ จากรายการที่หัวหน้ากำหนด</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#7c3aed;">2</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#7c3aed;">📸 ถ่ายรูปป้าย</div>
+            <div class="cam-box">
+              <svg viewBox="0 0 60 40" fill="none" width="48" height="32">
+                <rect x="2" y="2" width="56" height="36" rx="3" fill="#374151"/>
+                <rect x="15" y="8" width="30" height="24" rx="2" fill="#1e40af" opacity=".8"/>
+                <text x="30" y="24" text-anchor="middle" fill="white" font-size="7">COMP008</text>
+                <line x1="2" y1="2" x2="9" y2="2" stroke="white" stroke-width="1.5"/><line x1="2" y1="2" x2="2" y2="9" stroke="white" stroke-width="1.5"/>
+                <line x1="58" y1="2" x2="51" y2="2" stroke="white" stroke-width="1.5"/><line x1="58" y1="2" x2="58" y2="9" stroke="white" stroke-width="1.5"/>
+                <line x1="2" y1="38" x2="9" y2="38" stroke="white" stroke-width="1.5"/><line x1="2" y1="38" x2="2" y2="31" stroke="white" stroke-width="1.5"/>
+                <circle cx="30" cy="20" r="8" stroke="white" stroke-width="1" fill="none"/>
+              </svg>
+            </div>
+            <button class="btn btn-purple" style="font-size:8pt;margin-top:3px;">📸 ถ่ายรูป</button>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">ถ่ายรูปป้ายสินค้า</div>
+      <div class="step-desc">เล็งกล้องที่ป้าย Part No. ให้ชัด กด ถ่ายรูป</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#7c3aed;">3</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#7c3aed;">🤖 AI อ่านได้</div>
+            <div class="ai-result">
+              <div class="ai-label">✅ พบสินค้า (95%)</div>
+              <div style="font-size:8pt;margin-top:2px;">COMP0080018</div>
+              <div style="font-size:7.5pt;color:#374151;">คอมเพรสเซอร์ 1/4HP</div>
+            </div>
+            <div style="font-size:7.5pt;color:#374151;margin:4px 0 2px;">จำนวนที่นับได้:</div>
+            <input class="input-field active" value="12" readonly style="font-size:14pt;font-weight:800;text-align:center;">
+            <button class="btn btn-purple" style="margin-top:3px;font-size:8pt;">✓ ยืนยัน</button>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">AI อ่านป้าย → ยืนยัน</div>
+      <div class="step-desc">ตรวจสอบชื่อสินค้าที่ AI อ่านได้ ใส่จำนวน กด ยืนยัน</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#16a34a;">4</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#16a34a;">✅ WHAA0301</div>
+            <div class="loc-row">
+              <div style="font-size:7.5pt;font-weight:700;">COMP0080018</div>
+              <span class="badge badge-green">12 ✓</span>
+            </div>
+            <div class="loc-row">
+              <div style="font-size:7.5pt;font-weight:700;">GASK0010082</div>
+              <span class="badge badge-green">8 ✓</span>
+            </div>
+            <div style="border-top:1px solid #e2e8f0;margin-top:4px;padding-top:4px;">
+              <button class="btn btn-green" style="font-size:8pt;">✓ โลเคชั่นเสร็จแล้ว</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">ครบทุกรายการ</div>
+      <div class="step-desc">เมื่อนับครบทุกรายการ กด ยืนยันโลเคชั่น แล้วไปชั้นถัดไป</div>
+    </div>
+  </div>
+
+  <div class="tip"><div class="tip-icon">💡</div><div>ถ้า AI อ่านไม่ออก → กด <strong>สแกนบาร์โค้ดสินค้า</strong> ด้วยกล้องมือถือแทน หรือพิมพ์รหัสสินค้าเอง</div></div>
+  <div class="tip success-tip"><div class="tip-icon">📸</div><div>ถ่ายรูปหลักฐาน: กดปุ่ม 📷 ในหน้าบันทึกจำนวน เพื่อถ่ายรูปของที่นับเป็นหลักฐาน</div></div>
+</div>
+
+<!-- ═══════════════════ 4. GOPRO COUNT ═══════════════════ -->
+<div class="section break">
+  <div class="method-strip" style="background:#ffedd5;border-bottom:3px solid #ea580c;">
+    <div class="method-icon" style="background:#ea580c;color:#fff;">🎥</div>
+    <div>
+      <h3 style="color:#9a3412;">GoPro Count</h3>
+      <div class="method-sub" style="color:#c2410c;">ชั้นสูงมาก ต้องใช้รถยก | GoPro ถ่ายไว้ก่อน — นับจากรูปในแอป</div>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:#ea580c;">1</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#ea580c;">🎥 GoPro Count</div>
+            <div style="font-size:7.5pt;color:#64748b;margin-bottom:3px;text-align:center;">ไดรเวอร์ถ่าย GoPro ไว้แล้ว</div>
+            <div class="cam-box" style="height:50px;background:#0f172a;">
+              <svg viewBox="0 0 60 36" fill="none" width="48" height="30">
+                <rect x="2" y="2" width="56" height="32" rx="2" fill="#1e293b"/>
+                <rect x="8" y="6" width="20" height="24" rx="1" fill="#374151"/>
+                <rect x="32" y="6" width="20" height="24" rx="1" fill="#374151"/>
+                <text x="18" y="22" text-anchor="middle" fill="#94a3b8" font-size="6">WHBB0401</text>
+                <text x="42" y="22" text-anchor="middle" fill="#94a3b8" font-size="6">PART0033</text>
+                <circle cx="56" cy="5" r="3" fill="#ef4444"/>
+              </svg>
+            </div>
+            <div style="text-align:center;font-size:7.5pt;color:#ea580c;margin-top:3px;font-weight:700;">รูปพร้อมแล้ว ●</div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">GoPro ถ่ายไว้ก่อน</div>
+      <div class="step-desc">ไดรเวอร์รถยกถ่ายชั้นสูงด้วย GoPro ก่อนวันนับ รูปอัปโหลดขึ้นระบบแล้ว</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#ea580c;">2</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#ea580c;">🎥 GoPro Count</div>
+            <div style="font-size:7.5pt;color:#374151;margin-bottom:3px;">เลือกโลเคชั่น:</div>
+            <div class="loc-row">
+              <div>
+                <div style="font-size:7.5pt;font-weight:700;">WHBB0401</div>
+                <div style="font-size:7pt;color:#64748b;">ชั้น 4 แถว B · 5 รายการ</div>
+              </div>
+              <span class="badge badge-orange">รอนับ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">เลือก Location</div>
+      <div class="step-desc">แตะโลเคชั่น หรือสแกนบาร์โค้ดที่ชั้นวาง</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#ea580c;">3</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#ea580c;">📦 WHBB0401</div>
+            <div class="gp-item">
+              <div class="gp-photo"><svg viewBox="0 0 20 16" fill="none" width="16"><rect x="1" y="1" width="18" height="14" rx="1" fill="#374151"/><circle cx="10" cy="8" r="4" stroke="#94a3b8" stroke-width="1.2" fill="none"/><circle cx="10" cy="8" r="1.5" fill="#64748b"/></svg></div>
+              <div style="flex:1;min-width:0;"><div style="font-size:7.5pt;font-weight:700;">COMP0080018</div><div style="font-size:7pt;color:#64748b;">คอมเพรสเซอร์</div></div>
+              <input class="gp-qty" value="6" readonly>
+            </div>
+            <div class="gp-item">
+              <div class="gp-photo"><svg viewBox="0 0 20 16" fill="none" width="16"><rect x="1" y="1" width="18" height="14" rx="1" fill="#374151"/><circle cx="10" cy="8" r="4" stroke="#94a3b8" stroke-width="1.2" fill="none"/><circle cx="10" cy="8" r="1.5" fill="#64748b"/></svg></div>
+              <div style="flex:1;min-width:0;"><div style="font-size:7.5pt;font-weight:700;">GASK0010082</div><div style="font-size:7pt;color:#64748b;">ยางประตู</div></div>
+              <span class="gp-missing">Missing</span>
+            </div>
+            <div class="gp-item" style="opacity:.5;">
+              <div class="gp-photo" style="background:#4b5563;"></div>
+              <div style="flex:1;min-width:0;"><div style="font-size:7.5pt;font-weight:700;">WIRE0030045</div></div>
+              <span class="badge badge-orange" style="font-size:7pt;">รอ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">ดูรูป &amp; ใส่จำนวน</div>
+      <div class="step-desc">ดูรูป GoPro ใส่จำนวนที่นับจากรูป ถ้าไม่มีของกด Missing</div>
+      <div class="step-arrow">›</div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#16a34a;">4</div>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="status-bar"><span></span><span></span><span></span></div>
+          <div class="screen-body">
+            <div class="app-header" style="background:#16a34a;">✅ บันทึกแล้ว</div>
+            <div class="gp-item">
+              <div style="flex:1;"><div style="font-size:7.5pt;font-weight:700;">COMP0080018</div></div>
+              <span class="badge badge-green">6 ✓</span>
+            </div>
+            <div class="gp-item">
+              <div style="flex:1;"><div style="font-size:7.5pt;font-weight:700;">GASK0010082</div></div>
+              <span class="badge badge-red">0 Missing</span>
+            </div>
+            <div style="border-top:1px solid #e2e8f0;margin-top:4px;padding-top:4px;">
+              <button class="btn btn-green" style="font-size:7.5pt;">✓ ส่งและไปต่อ</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-title">ส่งและไปต่อ</div>
+      <div class="step-desc">ตรวจทานครบแล้ว กด ส่ง → ไปโลเคชั่นถัดไป</div>
+    </div>
+  </div>
+  <div class="tip"><div class="tip-icon">💡</div><div>ถ้าเห็นสินค้าในรูปแต่ไม่อยู่ในรายการ → กด <strong>➕ เพิ่มสินค้า</strong> ถ่ายรูปป้าย AI จะอ่านรหัสให้</div></div>
+  <div class="tip warning"><div class="tip-icon">⚠️</div><div><strong>Missing ≠ ศูนย์</strong> — กด Missing เฉพาะเมื่อไม่เห็นของในรูป GoPro เลย ถ้าเห็นแต่นับไม่ออก ให้ประมาณจำนวน</div></div>
+</div>
+
+<!-- ═══════════════════ 5. FIX WRONG QTY ═══════════════════ -->
+<div class="section break">
+  <div class="sec-header" style="color:#dc2626;border-color:#dc2626;background:#fee2e2;">
+    <div class="sec-icon" style="background:#dc2626;color:#fff;">⚠</div>
+    <div><h2 style="color:#991b1b;">แก้ไขจำนวนที่นับผิด</h2>
+    <p style="color:#dc2626;">ทำได้ก่อน Supervisor ปิด Session เท่านั้น</p></div>
+  </div>
+  <div class="fix-steps">
+    <div class="fix-card" style="background:#fee2e2;border-color:#fca5a5;">
+      <div style="font-size:22px;margin-bottom:6px;">🔍</div>
+      <div style="font-weight:700;font-size:10.5pt;color:#991b1b;margin-bottom:4px;">หาสินค้าที่ผิด</div>
+      <div style="font-size:9pt;color:#64748b;line-height:1.4;">ในหน้า Barcode / Smart / GoPro — เลื่อนหารายการที่บันทึกแล้ว (สีเขียว)</div>
+    </div>
+    <div class="fix-card" style="background:#fef3c7;border-color:#fcd34d;">
+      <div style="font-size:22px;margin-bottom:6px;">✏️</div>
+      <div style="font-weight:700;font-size:10.5pt;color:#92400e;margin-bottom:4px;">กดแก้ไข</div>
+      <div style="font-size:9pt;color:#64748b;line-height:1.4;">แตะค้างที่รายการ หรือกดปุ่ม ✏️ Edit เพื่อแก้ไขจำนวน</div>
+    </div>
+    <div class="fix-card" style="background:#dcfce7;border-color:#86efac;">
+      <div style="font-size:22px;margin-bottom:6px;">💾</div>
+      <div style="font-weight:700;font-size:10.5pt;color:#166534;margin-bottom:4px;">บันทึกใหม่</div>
+      <div style="font-size:9pt;color:#64748b;line-height:1.4;">ใส่จำนวนที่ถูกต้อง กด บันทึก ระบบบันทึก Audit Log ไว้</div>
+    </div>
+  </div>
+  <div class="tip warning"><div class="tip-icon">⚠️</div><div>ถ้า Session ปิดแล้ว (Completed) ต้องแจ้ง <strong>Admin / IC Team</strong> เพื่อแก้ไข — ผู้นับแก้เองไม่ได้</div></div>
+</div>
+
+<!-- ═══════════════════ 6. COMPLETE ═══════════════════ -->
+<div class="section">
+  <div class="sec-header" style="color:#16a34a;border-color:#16a34a;background:#dcfce7;">
+    <div class="sec-icon" style="background:#16a34a;color:#fff;">✓</div>
+    <div><h2 style="color:#14532d;">เสร็จสิ้น — ส่งงานและปิด Session</h2>
+    <p style="color:#16a34a;">ทำเมื่อนับครบทุกโลเคชั่นในทีมแล้ว</p></div>
+  </div>
+  <div class="complete-steps">
+    <div class="complete-card">
+      <div class="cc-icon">📋</div>
+      <div class="cc-title">ตรวจสอบรายการ</div>
+      <div class="cc-desc">ตรวจว่าทุกโลเคชั่นมีสถานะ ✅ Done ครบหมดแล้ว ไม่มีค้างอยู่</div>
+    </div>
+    <div class="complete-card">
+      <div class="cc-icon">📸</div>
+      <div class="cc-title">ถ่ายรูปหลักฐาน</div>
+      <div class="cc-desc">ถ่ายรูปพื้นที่ที่นับแล้วเพื่อเป็นหลักฐาน ก่อนออกจากโลเคชั่น</div>
+    </div>
+    <div class="complete-card">
+      <div class="cc-icon">🔔</div>
+      <div class="cc-title">แจ้ง Supervisor</div>
+      <div class="cc-desc">แจ้งหัวหน้าทีมว่านับครบแล้ว รอให้ Supervisor ตรวจและปิด Session</div>
+    </div>
+    <div class="complete-card" style="background:#dcfce7;border-color:#86efac;">
+      <div class="cc-icon">🎉</div>
+      <div class="cc-title">เสร็จเรียบร้อย!</div>
+      <div class="cc-desc">รอ Supervisor กดปิด Session — ห้ามแก้ไขข้อมูลหลังจากนี้</div>
+    </div>
+  </div>
+
+  <!-- status flow -->
+  <div style="padding:6px 14px 2px;font-size:9.5pt;font-weight:700;color:#374151;">สถานะ Session:</div>
+  <div class="status-flow">
+    <div class="status-pill" style="background:#f1f5f9;color:#475569;">Draft</div>
+    <div style="color:#94a3b8;">→</div>
+    <div class="status-pill" style="background:#dbeafe;color:#1d4ed8;">Active ●</div>
+    <div style="color:#94a3b8;">→</div>
+    <div class="status-pill" style="background:#dcfce7;color:#166534;">Completed ✓</div>
+    <div style="color:#94a3b8;">→</div>
+    <div class="status-pill" style="background:#ede9fe;color:#5b21b6;">Reconciled</div>
+    <div style="color:#94a3b8;">→</div>
+    <div class="status-pill" style="background:#f8fafc;color:#64748b;">Archived</div>
+  </div>
+  <div style="height:14px;"></div>
+</div>
+
+<!-- footer -->
+<div style="text-align:center;padding:12px;color:#94a3b8;font-size:9pt;">
+  CWx StockTake — Pattana Intercool · กรกฎาคม 2569 · หากมีปัญหาติดต่อ IC Team
+</div>
+
+</body>
+</html>
